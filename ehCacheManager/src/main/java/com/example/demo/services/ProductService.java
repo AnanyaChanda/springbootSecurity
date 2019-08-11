@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import com.example.demo.model.*;
@@ -13,9 +14,11 @@ public class ProductService {
 	private List<Product> productList;
 
 
-	public List<Product> getAll(){
+	@Cacheable(value="ten-second-cache", key="'product-cache'+#id")
+	public Product getAll(long id) throws InterruptedException{
 		
-		return this.productList;
+		Thread.sleep(4000);
+		return this.productList.stream().filter(eachProduct -> eachProduct.getProductId() == id).findFirst().orElse(null);
 	}
 
 }
