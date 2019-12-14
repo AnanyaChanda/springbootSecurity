@@ -18,9 +18,17 @@ public class ProductController {
 	private ProductService service;
 	
 	
-	@GetMapping("/getAll/{id}")
+	@GetMapping("/getById/{id}")
 	public Product findById(@PathVariable("id") long id) throws InterruptedException{
 		
-		return this.service.getAll(id);
+		return this.service.getProductById(id);
 	}
+	
+	
+	@GetMapping("/getById/{id}/{rpu}")
+	public Product updateRpu(@PathVariable("id") long id,@PathVariable("rpu") double ratePerUnit) throws InterruptedException{
+		
+		return this.service.updateProductById(id, ratePerUnit);
+	}
+	
 }
